@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wallet.walletManagement.repository.AccountRepository">
+
+    <resultMap id="AccountResultMap" type="com.wallet.walletManagement.model.Account">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="balance" column="balance"/>
+        <result property="createdAcc" column="created_acc"/>
+        <result property="updateAcc" column="update_acc"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="AccountResultMap">
+        SELECT * FROM accounts
+    </select>
+
+    <select id="findById" parameterType="long" resultMap="AccountResultMap">
+        SELECT * FROM accounts WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.wallet.walletManagement.model.Account">
+        INSERT INTO accounts(user_id, name, type, balance, created_acc, update_acc)
+        VALUES (#{userId}, #{name}, #{type}, #{balance}, #{createdAcc}, #{updateAcc})
+    </insert>
+
+    <update id="update" parameterType="com.wallet.walletManagement.model.Account">
+        UPDATE accounts
+        SET name=#{name}, type=#{type}, balance=#{balance}, update_acc=#{updateAcc}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM accounts WHERE id=#{id}
+    </delete>
+
+</mapper>

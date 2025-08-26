@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wallet.walletManagement.repository.CategoryRepository">
+
+    <resultMap id="CategoryResultMap" type="com.wallet.walletManagement.model.Category">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="createAcc" column="create_acc"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="CategoryResultMap">
+        SELECT * FROM categories
+    </select>
+
+    <select id="findById" parameterType="long" resultMap="CategoryResultMap">
+        SELECT * FROM categories WHERE id = #{id}
+    </select>
+
+    <select id="findByType" parameterType="string" resultMap="CategoryResultMap">
+        SELECT * FROM categories WHERE type = #{type}
+    </select>
+
+    <insert id="insert" parameterType="com.wallet.walletManagement.model.Category">
+        INSERT INTO categories(name, type, create_acc)
+        VALUES (#{name}, #{type}, #{createAcc})
+    </insert>
+
+    <update id="update" parameterType="com.wallet.walletManagement.model.Category">
+        UPDATE categories
+        SET name=#{name}, type=#{type}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM categories WHERE id=#{id}
+    </delete>
+
+</mapper>

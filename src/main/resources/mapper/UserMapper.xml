@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wallet.walletManagement.repository.UserRepository">
+
+    <resultMap id="UserResultMap" type="com.wallet.walletManagement.model.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="role" column="role"/>
+        <result property="createAcc" column="create_acc"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="UserResultMap">
+        SELECT * FROM users
+    </select>
+
+    <select id="findById" parameterType="long" resultMap="UserResultMap">
+        SELECT * FROM users WHERE id = #{id}
+    </select>
+
+    <select id="findByUsername" parameterType="string" resultMap="UserResultMap">
+        SELECT * FROM users WHERE username = #{username}
+    </select>
+
+    <insert id="insert" parameterType="com.wallet.walletManagement.model.User">
+        INSERT INTO users(username, password, email, role, create_acc)
+        VALUES (#{username}, #{password}, #{email}, #{role}, #{createAcc})
+    </insert>
+
+    <update id="update" parameterType="com.wallet.walletManagement.model.User">
+        UPDATE users
+        SET username=#{username}, password=#{password}, email=#{email}, role=#{role}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM users WHERE id=#{id}
+    </delete>
+
+</mapper>
