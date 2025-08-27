@@ -1,49 +1,66 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+package com.wallet.walletManagement.Controller;
 
-<mapper namespace="com.wallet.walletManagement.repository.TrasactionRepository">
+import com.wallet.walletManagement.model.Transcation;
+import com.wallet.walletManagement.service.TransactionService;
+import lombok.RequiredArgsConstructor;
 
-    <resultMap id="TransactionResultMap" type="com.wallet.walletManagement.model.Transcation">
-        <id property="id" column="id"/>
-        <result property="accountId" column="account_id"/>
-        <result property="type" column="type"/>
-        <result property="amount" column="amount"/>
-        <result property="category" column="category"/>
-        <result property="memo" column="memo"/>
-        <result property="date" column="date"/>
-    </resultMap>
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-    <select id="findAll" resultMap="TransactionResultMap">
-        SELECT * FROM transactions
-    </select>
+import java.time.LocalDateTime;
+import java.util.List;
 
-    <select id="findById" parameterType="long" resultMap="TransactionResultMap">
-        SELECT * FROM transactions WHERE id = #{id}
-    </select>
+@RestController
+@RequestMapping("/api/transactions")
+@RequiredArgsConstructor
+public class TransactionController {
 
-    <select id="findByAccountId" parameterType="long" resultMap="TransactionResultMap">
-        SELECT * FROM transactions WHERE account_id = #{accountId}
-    </select>
+    private final TransactionService transactionService;
+    @Autowired
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
+    @GetMapping
+    public ResponseEntity<List<Transcation>> getAllTransactions() {
+        return ResponseEntity.ok(transactionService.getAllTransactions());
+    }
 
-    <select id="findByDateRange" resultMap="TransactionResultMap">
-        SELECT * FROM transactions
-        WHERE date BETWEEN #{start} AND #{end}
-    </select>
+    @GetMapping("/{id}")
+    public ResponseEntity<Transcation> getTransactionById(@PathVariable Long id) {
+        return ResponseEntity.ok(transactionService.getTransactionById(id));
+    }
 
-    <insert id="insert" parameterType="com.wallet.walletManagement.model.Transcation">
-        INSERT INTO transactions(account_id, type, amount, category, memo, date)
-        VALUES (#{accountId}, #{type}, #{amount}, #{category}, #{memo}, #{date})
-    </insert>
+    @GetMapping("/account/{accountId}")
+    public ResponseEntity<List<Transcation>> getTransactionsByAccount(@PathVariable Long accountId) {
+        return ResponseEntity.ok(transactionService.getTransactionsByAccount(accountId));
+    }
 
-    <update id="update" parameterType="com.wallet.walletManagement.model.Transcation">
-        UPDATE transactions
-        SET type=#{type}, amount=#{amount}, category=#{category}, memo=#{memo}, date=#{date}
-        WHERE id=#{id}
-    </update>
+    @GetMapping("/range")
+    public ResponseEntity<List<Transcation>> getTransactionsByDateRange(
+            @RequestParam("start") String start,
+            @RequestParam("end") String end) {
+        return ResponseEntity.ok(
+                transactionService.getTransactionsByDateRange(LocalDateTime.parse(start), LocalDateTime.parse(end))
+        );
+    }
 
-    <delete id="delete" parameterType="long">
-        DELETE FROM transactions WHERE id=#{id}
-    </delete>
+    @PostMapping
+    public ResponseEntity<Void> createTransaction(@RequestBody Transcation transcation) {
+        transactionService.createTransaction(transcation);
+        return ResponseEntity.ok().build();
+    }
 
-</mapper>
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateTransaction(@PathVariable Long id, @RequestBody Transcation transcation) {
+        transcation.setId(id);
+        transactionService.updateTransaction(transcation);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {
+        transactionService.deleteTransaction(id);
+        return ResponseEntity.ok().build();
+    }
+}

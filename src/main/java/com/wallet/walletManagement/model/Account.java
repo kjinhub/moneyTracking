@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class Account {
 	private Long id;
+	private Long userId;
 	private String name;
 	private String type; // 현금 지출인지 카드 지출인지  
 	private Double balance;
@@ -45,4 +46,11 @@ public class Account {
 	public void setUpdateAcc(LocalDateTime updateAcc) {
 		this.updateAcc = updateAcc;
 	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 }

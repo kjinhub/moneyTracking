@@ -6,6 +6,8 @@
 
     <resultMap id="AccountResultMap" type="com.wallet.walletManagement.model.Account">
         <id property="id" column="id"/>
+            <result property="userId" column="user_id"/> <!-- ✅ 빠져있던 부분 추가 -->
+
         <result property="name" column="name"/>
         <result property="type" column="type"/>
         <result property="balance" column="balance"/>

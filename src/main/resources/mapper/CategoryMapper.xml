@@ -19,7 +19,7 @@
         SELECT * FROM categories WHERE id = #{id}
     </select>
 
-    <select id="findByType" parameterType="string" resultMap="CategoryResultMap">
+    <select id="findByType" parameterType="java.lang.String" resultMap="CategoryResultMap">
         SELECT * FROM categories WHERE type = #{type}
     </select>
 

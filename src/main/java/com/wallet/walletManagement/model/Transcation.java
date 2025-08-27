@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 public class Transcation {
 	private Long id;
 	private Long accountId;
+    private Long categoryId; // ✅ bigint → Long 으로 수정
+
 	private String type;
 	private Double amount;
 	private String category;
@@ -51,6 +53,12 @@ public class Transcation {
 	}
 	public void setDate(LocalDateTime date) {
 		this.date = date;
+	}
+	public Long getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 	
 }
