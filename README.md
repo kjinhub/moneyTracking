@@ -19,7 +19,7 @@ Database: MySQL 8.x
 Build Tool: Maven/Gradle
 
 Test Tool: Postman
-
+```
 📂 프로젝트 구조
 walletManagement/
  ├── src/main/java/com/wallet/walletManagement
@@ -32,7 +32,7 @@ walletManagement/
  │    ├── mapper/       # MyBatis XML Mapper 파일
  │    └── application.properties
  └── pom.xml (or build.gradle)
-
+```
 📊 데이터베이스 구조 (ERD 요약)
 
 User (사용자)
@@ -153,7 +153,7 @@ MySQL에 DB 및 계정 생성
 CREATE DATABASE walletdb;
 CREATE USER 'walletuser'@'localhost' IDENTIFIED BY '비밀번호';
 GRANT ALL PRIVILEGES ON walletdb.* TO 'walletuser'@'localhost';
-
+```
 
 application.properties 설정
 
@@ -162,7 +162,7 @@ spring.datasource.username=walletuser
 spring.datasource.password=비밀번호
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
-
+```
 프로젝트 실행
 
 ./mvnw spring-boot:run
