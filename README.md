@@ -33,63 +33,7 @@ walletManagement/
  │    └── application.properties
  └── pom.xml (or build.gradle)
 ```
-📊 데이터베이스 구조 (ERD 요약)
 
-User (사용자)
-
-id (PK)
-
-username (UNIQUE)
-
-password
-
-email (UNIQUE)
-
-role
-
-create_acc
-
-Account (계좌)
-
-id (PK)
-
-user_id (FK → User.id)
-
-name
-
-type
-
-balance
-
-created_acc
-
-update_acc
-
-Category (카테고리)
-
-id (PK)
-
-name
-
-type
-
-create_acc
-
-Transaction (거래)
-
-id (PK)
-
-account_id (FK → Account.id)
-
-category_id (FK → Category.id)
-
-type
-
-amount
-
-memo
-
-date
 
 📡 API Endpoints
 1. User API
